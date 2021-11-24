@@ -1,0 +1,17 @@
+extends layout 
+block content 
+
+  include partial_pan.jade
+  main(class= "col-md-9 ms-sm-auto col-lg-10 px-md-4")
+   div(class="testbox")
+    form(class="myform" method="post")
+      div(class="banner")
+        h1(Hotel Reservation Form)
+
+      div(class="item")
+       label(for="checkindate") Date du registre 
+       span *
+       input(id="checkinda" type="Date" name="dte_registre")
+
+      div(class="btn-block")
+       button(type="submit" ) #{action}

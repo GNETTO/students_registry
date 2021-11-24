@@ -1,0 +1,33 @@
+extends layout 
+block content 
+
+  include partial_pan.jade
+  main(class= "col-md-9 ms-sm-auto col-lg-10 px-md-4")
+   div(class="bg-danger mt-2 p-2 mb-3 text-white") Les Formations
+   div(class="") 
+    a(href="/administration/formations/ajouter" class="btn btn-outline-secondary") Nouveau
+
+   div(class="item")
+    p Toutes les formations
+    select(class="form-select" multiple aria-label="multiple select")
+     for forma in formations
+      option(value="20" selected) #{forma.intitule }
+       
+    
+   div(class="album py-5 bg-light")
+    div(class="container-fluid")
+      div( class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 row-cols-md-4  g-3 ")
+
+        for forma in formations
+         div( class="col acceuil-animal-block")
+          div( class="card shadow-sm")
+           p(class="p-2 d-flex justify-content-between")  #{forma.intitule}
+           img( class="bd-placeholder-img card-img-top" width="50px" height="225"  xmlns="http://www.w3.org/2000/svg"  role="img" aria-label="Placeholder: Thumbnail" src='/photo/refdigital.png' focusable="false")
+           div(class="card-body my-card-items")
+            p(class="card-text")
+            div(class="d-md-flex justify-content-between  align-items-center d-sm-block  ")
+             div( class="btn-group w-100") #{forma.description}
+            div(class="d-flex justify-content-between")
+             a(class="btn-for-choose" class="btn btn-sm btn-outline-secondary" href="/administration/formations/modifier/#{forma.id}" ) Modifier
+             a(class="btn btn-sm btn-outline-secondary" href="/administration/formations/Supprimer/#{forma.id}") Supprimer
+       

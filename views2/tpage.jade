@@ -1,0 +1,21 @@
+extends layout
+block content
+
+ table(class="table")
+  tr
+   td id
+   td name
+   td sname 
+   td date_b
+   td time
+
+    for data in d 
+     tr
+      
+       td
+        a(href='/db/u/#{data.id}')
+         =data.id
+       td=data.na
+       td=data.sna
+       td=data.dte
+       td=data.hr

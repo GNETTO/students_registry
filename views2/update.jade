@@ -1,0 +1,20 @@
+extends layout
+block content
+
+ p nodejs registre
+ div(class="container")
+  form(method="post" )
+    div(class='row')
+        label(class="") nom
+        input(type="text" value="#{d.na}" name="na")
+    div(class='row')
+        label(class="") prenom
+        input(type="text" value="#{d.sna}" name="sna")
+    div(class='row')
+        label(class="") dte
+        input(type="type" value="#{d.dte}" name="dte")
+    div(class='row')
+        label(class="") hour
+        input(type="text" value="#{d.hr}" name="hr")
+        br
+    input(type="submit" value="update")

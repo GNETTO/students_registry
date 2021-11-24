@@ -1,0 +1,223 @@
+extends layout 
+block content 
+
+  include partial_pan.jade
+  main(class= "col-md-9 ms-sm-auto col-lg-10 px-md-4") 
+   div((class="testbox")
+    form
+      div((class="banner")
+        h1(Hotel Reservation Form)
+     
+      br
+      fieldset
+        legend Inregistre Generales
+        div((class="columns")
+          div((class="item")
+            label(for="fname") Nom
+            span *
+            input(id="fname" type="text" name="nom")
+         
+          div((class="item")
+            label(for="lname") Prenoms
+            span *
+            input(id="lname" type="text" name="prenoms" )
+          
+          div((class="item")
+            label(for="address") Address
+            span *
+            input(id="address" type="text"   name="address")
+
+          
+          div((class="item")
+            label(for="city") Lieu d' Habitation
+            span *
+            input(id="city" type="text"   name="habitation")
+
+          
+          div((class="item")
+            label(for="eaddress") Email Address
+            span *
+            input(id="eaddress" type="text"   name="eamail")
+          
+          div( class="item"
+            label(for="phone") Contact
+            span *
+            input(id="phone" type="tel"   name="phone")
+          
+      
+      br
+      fieldset
+       legend Dates
+       div((class="columns")
+        div((class="item")
+         label(for="checkindate") Check-in Date 
+         span *
+       input(id="checkindate" type="date" name="checkindate")
+       i(class="fas fa-calendar-alt")
+      
+       div((class="item")
+        label(for="checkoutdate") Check-out Date
+        span *
+        input(id="checkoutdate" type="date" name="checkoutdate")
+        i(class="fas fa-calendar-alt")
+      
+      div((class="item")
+      p Check-in Time
+      select
+       option(value="" disabled selected) Select time
+       option(value="1" ) Morning
+       option(value="2") Afternoon
+       option(value="3") Evening
+      
+      div((class="item")
+      p Check-out Time 
+      select
+       option(value="4" disabled selected) Select time
+       option(value="5" ) Morning
+       option(value="6") Afternoon
+       option(value="7") Evening
+        
+      div((class="item")
+       p How many adults are coming?
+       select 
+        option(value="8" disabled selected) Number of adults
+        option(value="9" ) 1
+        option(value="10") 2
+        option(value="11") 3
+        option(value="12") 4
+        option(value="13") active5
+        
+      div((class="item")
+       p How many children are coming?
+       select
+        option(value="14" disabled selected) Number of children
+        option(value="15" ) 0
+        option(value="16") 1
+        option(value="17") 2
+        option(value="18") 3
+        option(value="19") 4
+        option(value="19") 5
+        
+      div((class="item" style="width:100%")
+       label(for="room") Number of rooms
+       input(id="room" type="number" name="room")
+      
+      div((class="item")
+       p Room 1 type
+      select
+       option(value="20" selected)
+       option(value="21") Standard
+       option(value="22") Deluxe
+       option(value="23") Suite 
+        
+      div((class="item")
+       p Room 2 type
+       select 
+        option(value="24"  selected)
+        option(value="25") Standard
+        option(value="26") Deluxe
+        option(value="27") Suite
+       div((class="item")
+        label(for="instruction") Special Instructions
+       textarea(id="instruction" rows="3")
+      
+      div((class="btn-block")
+       button(type="submit" href="/") Submit
+    
+
+
+
+   
+  div(class="album py-5 bg-light")
+    div(class="container-fluid")
+      div( class="row row-cols-2 row-cols-sm-3 row-cols-lg-5 row-cols-md-4  g-3 ")
+          ';
+-----
+  echo '
+       div( class="col acceuil-animal-block")
+        div( class="card shadow-sm")
+          p(class="p-2 d-flex justify-content-between" ')  . $row_item['label'] . '
+           span ans/span/p
+          img(
+            class="bd-placeholder-img card-img-top" width="50px" height="225" 
+            xmlns="http://www.w3.org/2000/svg" 
+            role="img" aria-label="Placeholder: Thumbnail" 
+            src= "' . $photo_items[$row_item['id']] . '"
+            focusable="false")
+          div(class="card-body my-card-items" data-id=' . $row_item['id'] . ')
+            p(class="card-text" "' . $row_item['description'] . '")
+            div(class="d-md-flex justify-content-between  align-items-center d-sm-block  ")
+                div( class="btn-group w-100")
+                  button( class="btn-for-choose" type="button" class="btn btn-sm btn-outline-secondary btn-cash-select" data-prix="' . $row_item['price'] . '" data-produit=' . $row_item['label']) Achetez
+
+                  button(type="button" class="btn btn-sm btn-outline-secondary") Voir plus
+        
+                small(class="text-muted acceui-price"' . $row_item['price'] .) ' FCFA
+       ';
+}
+
+
+
+
+
+Router.get("/registre", (req, res) => {
+    models.tb_registre_model.find({}, (err, all_tb_registre) => {
+        if (err) return res.end('Une erreur est apparue');
+       
+        res.render('registre', { registre: all_tb_registre })
+    })
+
+});
+
+Router.get("/registre/ajouter", (req, res) => {
+
+    res.render('form_registre', { action: 'AJOUTER', tb_registre: fake_data_tb_registre })
+});
+
+Router.post("/registre/ajouter", (req, res) => {
+    let registre = req.body; //console.log(appre)
+    new_test = new models.tb_registre_model(registre);
+
+    new_test.save((err, doc) => {
+        res.render('form_registre', { action: 'AJOUTER', tb_registre: doc })
+    });
+
+
+});
+
+Router.get("/registre/modifier/:id", (req, res) => {
+    //console.log(req.params.id)
+    models.tb_registre_model.findById(req.params.id, (err, current_user) => {
+        console.log(current_user)
+        res.render('form_registre', { tb_registre: current_user, action: 'MODIFIER' })
+    })
+
+});
+
+Router.post("/registre/modifier/:id", (req, res) => {
+    //console.log(req.params.id)
+    models.tb_registre_model.findByIdAndUpdate(req.params.id, req.body, (err, current_user) => {
+        console.log(current_user)
+        res.render('form_registre', { tb_registre: req.body, action: 'MODIFIER' })
+    })
+
+});
+
+
+Router.get("/registre/supprimer/:id", (req, res) => {
+    //console.log(req.params.id)
+    models.tb_registre_model.findById(req.params.id, (err, current_user) => {
+        console.log(current_user)
+        res.render('form_registre', { tb_registre: current_user, action: 'SUPPRESSION' })
+    })
+
+});
+
+Router.post("/registre/supprimer/:id", (req, res) => {
+    //console.log(req.params.id)
+    models.tb_registre_model.findByIdAndRemove(req.params.id, (err, current_user) => {
+        console.log(current_user)
+        res.render('form_registre', { registre: req.body, action: 'SUPPRESSION' })
+    })
+
+});

@@ -1,0 +1,26 @@
+extends layout 
+block content 
+
+  include partial_pan.jade
+  main(class= "col-md-9 ms-sm-auto col-lg-10 px-md-4") 
+    div(class="bg-danger mt-2 p-2 mb-3 text-white") Liste apprenants
+    div(class="") 
+     a(href="/administration/apprenant/ajouter" class="btn btn-outline-secondary") Nouveau
+    table(class="table")
+     thead
+      tr
+       th ID 
+       th Nom
+       th Prenoms
+       th Action
+     for appr in apprenant
+      tr
+       td 10
+       td=appr.nom
+       td=appr.prenoms
+       td
+        a(href="/administration/apprenant/modifier/#{appr.id}")
+         img(src="/icons/pen-alt.svg" class="small-icons")
+        a(href="/administration/apprenant/supprimer/#{appr.id}")
+         img(src="/icons/trash.svg" class="small-icons") 
+        

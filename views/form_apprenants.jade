@@ -1,0 +1,51 @@
+extends layout 
+block content 
+
+  include partial_pan.jade
+  main(class= "col-md-9 ms-sm-auto col-lg-10 px-md-4") 
+   div(class="testbox")
+    form(class="myform" method="post")
+      div(class="banner")
+        h1(Hotel Reservation Form)
+     
+      br
+      fieldset
+        legend #{action}
+        div(class="columns")
+          div(class="item")
+            label(for="fname") Nom
+            span *
+            
+            input(id="fname" type="text"  class="myinput" name="nom" value='#{apprenant.nom}')
+         
+          div(class="item")
+            label(for="lname") Prenoms
+            input(id="lname" type="text" class="myinput" name="prenoms" value='#{apprenant.prenoms}')
+
+          div(class="item")
+            label(for="city") Lieu d' Habitation
+            span *
+            input(id="city" type="text"   class="myinput" name="habitation" value='#{apprenant.habitation}')
+
+          
+          div(class="item")
+            label(for="eaddress") Email Address
+            span *
+            input(id="eaddress" type="text"  class="myinput" name="email" value='#{apprenant.email}')
+          
+          div(class="item")
+            label(for="phone") Contact
+            span *
+            input(id="phone" type="tel"  class="myinput" name="phone" value='#{apprenant.phone}')
+          
+          div(class="item")
+            label(for="phone") Photo
+            div( class="d-flex justify-content-between")
+              input(id="phone" type="file" class="myinput d-block"  name="file")
+              img(src="/icons/user.svg" style="width:50px")
+      
+      
+      div(class="btn-block")
+       button(type="submit" ) #{action}
+       
+    

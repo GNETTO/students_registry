@@ -1,0 +1,35 @@
+extends layout 
+block content 
+
+  include partial_pan.jade
+  main(class= "col-md-9 ms-sm-auto col-lg-10 px-md-4") 
+   div(class="testbox")
+    form(class="myform" method="post")
+      div(class="banner")
+        img(src="/photo/formation.jpg")
+     
+      br
+      fieldset
+        legend #{action}
+        div(class="columns")
+          div(class="item")
+            label(for="fname") Intitule 
+            span *
+            
+            input(id="fname" type="text"  class="myinput" name="intitule" value='#{formation.intitule}')
+         
+          div(class="item")
+            label(for="instruction") Description
+            textarea(id="instruction" rows="3" name="description") #{formation.description}
+          
+          div(class="item")
+            label(for="phone") Illustration
+            div( class="d-flex justify-content-between")
+              input(id="phone" type="file" class="myinput d-block"  name="file")
+              img(src="/icons/user.svg" style="width:50px")
+
+      div(class="btn-block")
+       button(type="submit" ) #{action}
+       
+    
+  
