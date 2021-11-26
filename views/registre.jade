@@ -7,3 +7,21 @@ block content
    div(class="") 
     a(href="/administration/registre/ajouter" class="btn btn-outline-secondary") Nouveau Registre
    hr
+   div(class="bg-light p-3 m-auto") TABLE DES REGISTRES 
+   table(class="table")
+     thead
+      tr
+       th ID 
+       th Date du Registre
+       th Action
+     for reg in registre
+      tr
+       td=reg.id
+       td=reg.dte_registre
+       td
+        a(href="/administration/registre/modifier/#{reg.id}")
+         img(src="/icons/pen-alt.svg" class="small-icons")
+        a(href="/administration/registre/supprimer/#{reg.id}")
+         img(src="/icons/trash.svg" class="small-icons") 
+
+   div(class="bg-light p-3 m-auto") LISTES DES EMARGEMENTS PAR REGISTRE

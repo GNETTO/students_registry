@@ -15,7 +15,7 @@ var errorHandler = require("errorhandler");
 var session = require("express-session");
 //var flash = require('connect-flash');
 var mongoDB = 'mongodb://127.0.0.1/presence_db';
-
+//var dotenv  = require('dotenv')
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
@@ -38,22 +38,25 @@ app.use(session({
 
 }));
 
+global.dom = "gneto";
 
 app.use(express.static(path.join(__dirname, 'public')));
-/*app.use((req, res, next)=>{
-    res.locals.isAdminPanIncluded =false;
-    res.locals.isHeaderIncluded = false ;
-    res.locals.user = req.user ; next()
-})*/
+app.use((req, res, next) => {
+    res.locals.d = false;
+
+    next()
+})
 
 
 app.use("/", require("./routes/acceuil"));
 app.use("/administration", require("./routes/dashboard"));
 
-app.get("/test", (req, res) => {
+app.get("/geoloc", (req, res) => {
 
-    res.render('test');
+    res.render('geoloc');
 });
+
+//5.3499169086982725, -4.011131684699846
 
 /*app.use('/login', require("./routes/login"));
 app.use('/success', require("./routes/success"));
@@ -70,4 +73,4 @@ nmap.discover(function (err, report) {
 });*/
 
 console.log(new Date(Date.now()).toLocaleDateString("en-US"))
-app.listen(3000, function () { console.log('serverx is listening to port 5000...ok') });
+app.listen(3000, function () { console.log('serverx is listening to port 3000...ok') });

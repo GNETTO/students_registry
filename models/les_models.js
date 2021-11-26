@@ -92,15 +92,15 @@ const student_schema = new Schema(
   file: '
   */
 //registre
-const registre_schema = new Schema(
+const sheet_schema = new Schema(
     {
 
         dte_registre: { type: Date }
     }
 );
 
-// tb_registre
-const tb_registre_schema = new Schema(
+// registre
+const registre_schema = new Schema(
     {
 
         ha: { type: String },
@@ -119,8 +119,8 @@ models.coache_model = mongoose.model('coach', coache_schema);
 models.inscription_model = mongoose.model('inscription', inscription_schema);
 models.offre_formation_model = mongoose.model('offre_formation', offre_formation_schema);
 
+models.sheet_model = mongoose.model('sheet', sheet_schema);
 models.registre_model = mongoose.model('registre', registre_schema);
-models.tb_registre_model = mongoose.model('tb_registre', tb_registre_schema);
 
 module.exports = models;
 
