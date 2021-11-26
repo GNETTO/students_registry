@@ -20,21 +20,27 @@ div(class="container-fluid")
         Dashboard
 
        li(class="nav-item border mb-1 position-relative")
-        span(class="position-absolute p-2 bg-danger border border-light rounded-circle" style="top:-10px;left:5px")
-          span(class="text-white") 500
+        span(class="position-absolute p-2  border border-light badge bg-success" style="top:-10px;left:5px")
+          span(class="text-white") #{total_student}
         a(class="nav-link" href="/administration/liste_apprenants")
          span(data-feather="file" class="d-block m-auto w-100  text-end") LES APPRENANTS
          img(class="d-block pan-icons m-auto" src="/icons/user-graduate.svg")
          
-       li(class="nav-item border")
+       li(class="nav-item border position-relative")
+        span(class="position-absolute p-2  border border-light badge bg-success" style="top:-10px;left:5px")
+          span(class="text-white") #{total_formation}
         a(class="nav-link" href="/administration/formations")
          span(data-feather="shopping-cart" class="d-block m-auto w-100  text-center") LES FORMATIONS
          img(class="d-block pan-icons m-auto" src="/icons/box-open.svg")        
-       li(class="nav-item")
+       li(class="nav-item position-relative")
+        span(class="position-absolute p-2  border border-light badge bg-success" style="top:-10px;left:5px")
+          span(class="text-white") #{total_sheet}
         a(class="nav-link" href="/administration/registre")
          span(data-feather="bar-chart-2" class="d-block m-auto w-100  text-center") REGISTRE
          img(class="d-block pan-icons m-auto" src="/icons/tablet-alt.svg")
-       li(class="nav-item")
+       li(class="nav- position-relative")
+        span(class="position-absolute p-2  border border-light badge bg-success" style="top:-10px;left:5px")
+          span(class="text-white") #{total_partenaire}
         a(class="nav-link" href="#" )
          span(data-feather="layers" class="d-block m-auto w-100  text-center") LES PARTENAIRES
          img(class="d-block pan-icons m-auto" src="/icons/umbrella.svg")

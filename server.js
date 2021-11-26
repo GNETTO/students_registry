@@ -17,6 +17,8 @@ var session = require("express-session");
 var mongoDB = 'mongodb://127.0.0.1/presence_db';
 //var dotenv  = require('dotenv')
 
+
+
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on('open', () => { console.log("Connected successfully to database ") });

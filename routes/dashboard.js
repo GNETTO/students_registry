@@ -43,15 +43,15 @@ function all_formations(cb) {
     models.formation_model.find({}, cb);
 }
 
-async.parallel(
-    [
-        all_students,
-        all_formations
-    ],
-    (err, resultat) => {
-        console.log(resultat)
-    }
-)
+function all_sheets(cb) {
+    models.sheet_model.find({}, cb);
+}
+
+function all_partenaires(cb) {
+    models.partenaire_model.find({}, cb);
+}
+
+
 
 models.sheet_model.find({}, (err, sheets) => {
 
@@ -66,7 +66,21 @@ Router.use("/", (req, res, next) => {
     next();
 })
 Router.get("/", (req, res) => {
-    res.render('admin')
+    async.parallel(
+        {
+            students: all_students,
+            formations: all_formations,
+            sheets: all_sheets,
+            partenaires: all_partenaires
+        },
+        (err, resultat) => {
+            console.log(resultat.students.length)
+
+            res.render('admin',
+                { total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+        }
+    )
+
 });
 
 
@@ -74,17 +88,40 @@ Router.get("/liste_apprenants", (req, res) => {
     models.student_model.find({}, (err, current_user) => {
         if (err) return res.end('Une erreur est apparue');
         if (!current_user) return res.end('Votre code d" access est erroné');
-        //console.log(current_user)
-        //console.log(current_user, { geoLoc: true });
-        res.render('list_apprenant', { apprenant: current_user })
+        async.parallel(
+            {
+                students: all_students,
+                formations: all_formations,
+                sheets: all_sheets,
+                partenaires: all_partenaires
+            },
+            (err, resultat) => {
+                console.log(resultat.students.length)
+
+                res.render('list_apprenant',
+                    { apprenant: current_user, total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+            }
+        )
+        /// res.render('list_apprenant', { apprenant: current_user })
     })
 
 });
 
 Router.get("/apprenant/ajouter", (req, res) => {
     p_action = dict_action[req.params.action];
+    async.parallel(
+        {
+            students: all_students,
+            formations: all_formations,
+            sheets: all_sheets,
+            partenaires: all_partenaires
+        },
+        (err, resultat) => {
+            //console.log(resultat.students.length)
+            res.render('form_apprenants',
+                { action: 'AJOUTER', apprenant: fake_data_apprenant, total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+        })
 
-    res.render('form_apprenants', { action: 'AJOUTER', apprenant: fake_data_apprenant })
 });
 
 
@@ -95,7 +132,19 @@ Router.post("/apprenant/ajouter", (req, res) => {
     new_test = new models.student_model(apprenant);
 
     new_test.save((err, doc) => {
-        res.render('form_apprenants', { action: 'AJOUTER', apprenant: doc })
+        async.parallel(
+            {
+                students: all_students,
+                formations: all_formations
+            },
+            (err, resultat) => {
+                console.log(resultat.students.length)
+
+                //res.render('admin', { total_total: resultat.students.length })
+                res.render('form_apprenants', { action: 'AJOUTER', apprenant: doc, total_total: resultat.students.length })
+            }
+        )
+
     });
 
 
@@ -104,8 +153,20 @@ Router.post("/apprenant/ajouter", (req, res) => {
 Router.get("/apprenant/modifier/:id", (req, res) => {
     //console.log(req.params.id)
     models.student_model.findById(req.params.id, (err, current_user) => {
-        console.log(current_user)
-        res.render('form_apprenants', { apprenant: current_user, action: 'MODIFIER' })
+        //console.log(current_user)
+        async.parallel(
+            {
+                students: all_students,
+                formations: all_formations,
+                sheets: all_sheets,
+                partenaires: all_partenaires
+            },
+            (err, resultat) => {
+                //console.log(resultat.students.length)
+                res.render('form_apprenants',
+                    { apprenant: current_user, action: 'MODIFIER', total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+            })
+        //res.render('form_apprenants', { apprenant: current_user, action: 'MODIFIER' })
     })
 
 });
@@ -115,7 +176,7 @@ Router.post("/apprenant/modifier/:id", (req, res) => {
     let upadat = req.body;
     upadat.code_access = 'a';
     models.student_model.findByIdAndUpdate(req.params.id, upadat, (err, current_user) => {
-        console.log(current_user)
+        //console.log(current_user)
         res.render('form_apprenants', { apprenant: req.body, action: 'MODIFIER' })
     })
 
@@ -125,8 +186,20 @@ Router.post("/apprenant/modifier/:id", (req, res) => {
 Router.get("/apprenant/supprimer/:id", (req, res) => {
     //console.log(req.params.id)
     models.student_model.findById(req.params.id, (err, current_user) => {
-        console.log(current_user)
-        res.render('form_apprenants', { apprenant: current_user, action: 'SUPPRESSION' })
+        //console.log(current_user)
+        async.parallel(
+            {
+                students: all_students,
+                formations: all_formations,
+                sheets: all_sheets,
+                partenaires: all_partenaires
+            },
+            (err, resultat) => {
+                //console.log(resultat.students.length)
+                res.render('form_apprenants',
+                    { apprenant: current_user, action: 'SUPPRESSION', total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+            })
+        //res.render('form_apprenants', { apprenant: current_user, action: 'SUPPRESSION' })
     })
 
 });
@@ -134,7 +207,7 @@ Router.get("/apprenant/supprimer/:id", (req, res) => {
 Router.post("/apprenant/supprimer/:id", (req, res) => {
     //console.log(req.params.id)
     models.student_model.findByIdAndRemove(req.params.id, (err, current_user) => {
-        console.log(current_user)
+        //console.log(current_user)
         res.render('form_apprenants', { apprenant: req.body, action: 'SUPPRESSION' })
     })
 
@@ -147,17 +220,38 @@ Router.post("/apprenant/supprimer/:id", (req, res) => {
 Router.get("/formations", (req, res) => {
     models.formation_model.find({}, (err, all_formation) => {
         if (err) return res.end('Une erreur est apparue');
-        //if (!current_user) return res.end('Votre code d" access est erroné');
-        //console.log(current_user)
-        //console.log(current_user, { geoLoc: true });
-        res.render('formations', { formations: all_formation })
+        async.parallel(
+            {
+                students: all_students,
+                formations: all_formations,
+                sheets: all_sheets,
+                partenaires: all_partenaires
+            },
+            (err, resultat) => {
+                //console.log(resultat.students.length)
+                res.render('formations',
+                    { formations: all_formation, total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+            })
+        //res.render('formations', { formations: all_formation })
     })
 
 });
 
 Router.get("/formations/ajouter", (req, res) => {
+    async.parallel(
+        {
+            students: all_students,
+            formations: all_formations,
+            sheets: all_sheets,
+            partenaires: all_partenaires
+        },
+        (err, resultat) => {
+            //console.log(resultat.students.length)
+            res.render('form_formations',
+                { action: 'AJOUTER', formation: fake_data_formation, total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+        })
 
-    res.render('form_formations', { action: 'AJOUTER', formation: fake_data_formation })
+    //res.render('form_formations', { action: 'AJOUTER', formation: fake_data_formation })
 });
 
 Router.post("/formations/ajouter", (req, res) => {
@@ -170,12 +264,23 @@ Router.post("/formations/ajouter", (req, res) => {
 
 
 });
-//pk.eyJ1IjoiYWxwaG9ybWF0ZSIsImEiOiJja3dlNGVxYzAwMTczMnBwbXh6cmE0OG4yIn0.a8Igo45fPqG3sq2AR7fYnA
+
 Router.get("/formations/modifier/:id", (req, res) => {
     //console.log(req.params.id)
     models.formation_model.findById(req.params.id, (err, current_user) => {
-        console.log(current_user)
-        res.render('form_formations', { formation: current_user, action: 'MODIFIER' })
+        async.parallel(
+            {
+                students: all_students,
+                formations: all_formations,
+                sheets: all_sheets,
+                partenaires: all_partenaires
+            },
+            (err, resultat) => {
+                //console.log(resultat.students.length)
+                res.render('form_formations',
+                    { action: 'MODIFIER', formation: current_user, total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+            })
+        //res.render('form_formations', { formation: current_user, action: 'MODIFIER' })
     })
 
 });
@@ -193,8 +298,19 @@ Router.post("/formations/modifier/:id", (req, res) => {
 Router.get("/formations/supprimer/:id", (req, res) => {
     //console.log(req.params.id)
     models.formation_model.findById(req.params.id, (err, current_user) => {
-        console.log(current_user)
-        res.render('form_formations', { formation: current_user, action: 'SUPPRESSION' })
+        async.parallel(
+            {
+                students: all_students,
+                formations: all_formations,
+                sheets: all_sheets,
+                partenaires: all_partenaires
+            },
+            (err, resultat) => {
+                //console.log(resultat.students.length)
+                res.render('form_formations',
+                    { formation: current_user, action: 'SUPPRESSION', total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+            })
+        //res.render('form_formations', { formation: current_user, action: 'SUPPRESSION' })
     })
 
 });
@@ -217,15 +333,37 @@ Router.post("/formations/supprimer/:id", (req, res) => {
 Router.get("/registre", (req, res) => {
     models.sheet_model.find({}, (err, all_tb_registre) => {
         if (err) return res.end('Une erreur est apparue');
-        console.log(all_tb_registre)
-        res.render('registre', { registre: all_tb_registre })
+        async.parallel(
+            {
+                students: all_students,
+                formations: all_formations,
+                sheets: all_sheets,
+                partenaires: all_partenaires
+            },
+            (err, resultat) => {
+                //console.log(resultat.students.length)
+                res.render('registre',
+                    { registre: all_tb_registre, total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+            })
+        //res.render('registre', { registre: all_tb_registre })
     })
 
 });
 
 Router.get("/registre/ajouter", (req, res) => {
-
-    res.render('form_registre', { action: 'CREER', tb_registre: fake_sheet })
+    async.parallel(
+        {
+            students: all_students,
+            formations: all_formations,
+            sheets: all_sheets,
+            partenaires: all_partenaires
+        },
+        (err, resultat) => {
+            //console.log(resultat.students.length)
+            res.render('form_registre',
+                { action: 'CREER', tb_registre: fake_sheet, total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+        })
+    //res.render('form_registre', { action: 'CREER', tb_registre: fake_sheet })
 });
 
 Router.post("/registre/ajouter", (req, res) => {
@@ -242,8 +380,19 @@ Router.post("/registre/ajouter", (req, res) => {
 Router.get("/registre/modifier/:id", (req, res) => {
     //console.log(req.params.id)
     models.sheet_model.findById(req.params.id, (err, current_user) => {
-        console.log(current_user)
-        res.render('form_registre', { tb_registre: current_user, action: 'MODIFIER' })
+        async.parallel(
+            {
+                students: all_students,
+                formations: all_formations,
+                sheets: all_sheets,
+                partenaires: all_partenaires
+            },
+            (err, resultat) => {
+                //console.log(resultat.students.length)
+                res.render('form_registre',
+                    { tb_registre: current_user, action: 'MODIFIER', total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+            })
+        //res.render('form_registre', { tb_registre: current_user, action: 'MODIFIER' })
     })
 
 });
@@ -261,8 +410,19 @@ Router.post("/registre/modifier/:id", (req, res) => {
 Router.get("/registre/supprimer/:id", (req, res) => {
     //console.log(req.params.id)
     models.sheet_model.findById(req.params.id, (err, current_user) => {
-        console.log(current_user)
-        res.render('form_registre', { tb_registre: current_user, action: 'SUPPRESSION' })
+        async.parallel(
+            {
+                students: all_students,
+                formations: all_formations,
+                sheets: all_sheets,
+                partenaires: all_partenaires
+            },
+            (err, resultat) => {
+                //console.log(resultat.students.length)
+                res.render('form_registre',
+                    { tb_registre: current_user, action: 'SUPPRESSION', total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
+            })
+        //res.render('form_registre', { tb_registre: current_user, action: 'SUPPRESSION' })
     })
 
 });
