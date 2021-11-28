@@ -95,7 +95,7 @@ const student_schema = new Schema(
 const sheet_schema = new Schema(
     {
 
-        dte_registre: { type: Date }
+        dte_registre: { type: Date, unique: true }
     }
 );
 
@@ -111,6 +111,13 @@ const registre_schema = new Schema(
     }
 );
 
+const setting_schema = new Schema(
+    {
+        sheet_auto_generation: { type: Boolean },
+        display_registre: { type: Boolean },
+        xxx: { type: Boolean }
+    }
+)
 let models = {};
 models.formation_model = mongoose.model('formation', formation_schema);
 models.student_model = mongoose.model('student', student_schema);
@@ -122,6 +129,7 @@ models.offre_formation_model = mongoose.model('offre_formation', offre_formation
 models.sheet_model = mongoose.model('sheet', sheet_schema);
 models.registre_model = mongoose.model('registre', registre_schema);
 
+models.setting_model = mongoose.model('setting', setting_schema);
 module.exports = models;
 
 

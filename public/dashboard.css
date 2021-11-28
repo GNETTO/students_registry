@@ -232,9 +232,9 @@ html, body {
   opacity: 0;
   cursor: pointer;
   }*/
-  input[type=radio], input[type=checkbox]  {
+  /*input[type=radio], input[type=checkbox]  {
   display: none;
-  }
+  }*/
   label.radio {
   position: relative;
   display: inline-block;
@@ -256,9 +256,9 @@ html, body {
   border-radius: 50%;
   border: 2px solid #ccc;
   }
-  input[type=radio]:checked + label:before, label.radio:hover:before {
+  /*input[type=radio]:checked + label:before, label.radio:hover:before {
   border: 2px solid  #006622;
-  }
+  }*/
   label.radio:after {
   content: "";
   position: absolute;
@@ -272,9 +272,9 @@ html, body {
   transform: rotate(-45deg);
   opacity: 0;
   }
-  input[type=radio]:checked + label:after {
+  /*input[type=radio]:checked + label:after {
   opacity: 1;
-  }
+  }*/
   .flax {
   display:flex;
   justify-content:space-around;

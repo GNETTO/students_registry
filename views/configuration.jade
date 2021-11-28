@@ -1,0 +1,16 @@
+extends layout 
+block content 
+
+  include partial_pan.jade
+  main(class= "col-md-9 ms-sm-auto col-lg-10 px-md-4")
+   div(class="bg-dark mt-2 p-2 mb-3 text-white") Mes configurations
+   
+   table(class="table" id="config-table")
+    thead
+     tr
+      th Parameter 
+      th Value
+    tbody(id="config-table-body")
+    
+   button(class="btn btn-dark" onclick="valide_config();") valider config
+  script(src='/js/config.js') 

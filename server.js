@@ -17,7 +17,7 @@ var session = require("express-session");
 var mongoDB = 'mongodb://127.0.0.1/presence_db';
 //var dotenv  = require('dotenv')
 
-
+let models = require("./models/les_models");
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
@@ -40,7 +40,10 @@ app.use(session({
 
 }));
 
-global.dom = "gneto";
+global.settings = {
+    sheet_generation: true,
+    blabla: [20, 5, 396]
+};
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
@@ -49,8 +52,13 @@ app.use((req, res, next) => {
     next()
 })
 
+models.setting_model.find({}, (err, settings) => {
+    //console.log(settings)
+    settings = settings[0]; //console.log(settings)
+    global.settings = settings
+})
 
-app.use("/", require("./routes/acceuil"));
+app.use("/", require("./routes/mainpage"));
 app.use("/administration", require("./routes/dashboard"));
 
 app.get("/geoloc", (req, res) => {

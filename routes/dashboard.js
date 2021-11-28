@@ -62,8 +62,13 @@ models.partenaire_model.find({}, (err, partenaires) => {
 
 });
 
+Router.all("/*", (req, res, next) => {
+    //console.log(settings);
+    next();
+})
+
 Router.use("/", (req, res, next) => {
-    console.log(dom);
+
     next();
 })
 Router.get("/", (req, res) => {
@@ -436,5 +441,40 @@ Router.post("/registre/supprimer/:id", (req, res) => {
     })
 
 });
+
+
+
+//PARAMETRE
+Router.get('/configurations', (req, res) => {
+    //console.log("DEMARRAGE ...");
+    models.setting_model.find({}, (err, settings) => {
+        //console.log(settings)
+        settings = settings[0]; //console.log(settings)
+        let keys = Object.keys(settings);
+
+        res.render('configuration')
+    })
+
+})
+
+Router.get('/config_data', (req, res) => {
+    models.setting_model.find({}, (err, settings) => {
+        //console.log(settings)
+        settings = settings[0]; //console.log(settings)
+        res.json(settings)
+    })
+
+})
+//61a3e566fe5c3f7748f1eb19
+//findById(req.params.id, (err, current_user)
+Router.post('/config_data', (req, res) => {
+    console.log(req.body)
+    models.setting_model.findByIdAndUpdate('61a3e566fe5c3f7748f1eb19', req.body, (err, new_settings) => {
+        console.log(new_settings)
+        //settings = new_settings[0]; //console.log(settings)
+        res.json(new_settings)
+    })
+
+})
 
 module.exports = Router;
