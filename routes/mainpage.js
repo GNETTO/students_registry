@@ -6,6 +6,7 @@ Router.get("/", (req, res) => {
 });
 
 Router.get("/emarger", (req, res) => {
+    //console.log(Date.now())
     res.render("emarger", { geoLoc: false })
 });
 
@@ -14,14 +15,14 @@ Router.post("/emarger", (req, res) => {
     dte_jour = new Date(Date.now());
     console.log(dte_jour)
 
-    /* models.student_model.findOne({ code_access: req.body.code_access }, (err, current_user) => {
-         if (err) return res.end('Une erreur est apparue');
-         if (!current_user) return res.end('Votre code d" access est erroné');
- 
-         console.log(current_user, { geoLoc: true });
-         res.redirect("/administration")
-     })*/
-    res.render("emarger", { geoLoc: false })
+    models.student_model.findOne({ code_access: req.body.code_access }, (err, current_user) => {
+        if (err) return res.end('Une erreur est apparue');
+        if (!current_user) return res.end('Votre code d" access est erroné');
+
+        console.log(current_user, { geoLoc: true });
+        res.redirect("/administration")
+    })
+
 });
 
 Router.get("/h_arrive/:times", (req, res) => {

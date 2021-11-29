@@ -82,5 +82,5 @@ nmap.discover(function (err, report) {
     }
 });*/
 
-console.log(new Date(Date.now()).toLocaleDateString("en-US"))
+//console.log(new Date(Date.now()).toLocaleDateString("en-US"))
 app.listen(3000, function () { console.log('serverx is listening to port 3000...ok') });

@@ -106,7 +106,8 @@ const registre_schema = new Schema(
         ha: { type: String },
         hd: { type: String },
         code_access: { type: String },
-        student: { type: Schema.Types.ObjectId, ref: 'students' }
+        student: { type: Schema.Types.ObjectId, ref: 'students' },
+        sheet: { type: Schema.Types.ObjectId, ref: 'sheets' }
 
     }
 );

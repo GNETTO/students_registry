@@ -136,26 +136,19 @@ axios.get("/administration/config_data").then(response => {
 })
 
 
-
 function checks(e) {
     res = e.currentTarget;
-
-
 
 }
 
 function valide_config() {
-    //console.log(all_config);
 
     let updates = {};
-    //var formdata = new FormData();
-
     Array.prototype.map.call(all_config, element => {
         //console.log(element.checked)
         updates[element.getAttribute('data-label')] = element.checked;
         //formdata.append('exil', element.checked)
     })
-
 
     axios.post("/administration/config_data", updates).then(response => {
 
@@ -166,6 +159,4 @@ function valide_config() {
         console.log('config validation succeeded')
 
     })
-
-
 }
