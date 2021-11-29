@@ -463,7 +463,6 @@ Router.get('/config_data', (req, res) => {
         settings = settings[0]; //console.log(settings)
         res.json(settings)
     })
-
 })
 //61a3e566fe5c3f7748f1eb19
 //findById(req.params.id, (err, current_user)
