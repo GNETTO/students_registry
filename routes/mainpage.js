@@ -10,6 +10,7 @@ Router.get("/emarger", (req, res) => {
     res.render("emarger", { geoLoc: false })
 });
 
+
 Router.post("/emarger", (req, res) => {
     // console.log(req.body.code_access)
     dte_jour = new Date(Date.now());
@@ -19,19 +20,33 @@ Router.post("/emarger", (req, res) => {
     models.student_model.findOne({ code_access: req.body.code_access }, (err, current_user) => {
         if (err) return res.end('Une erreur est apparue');
         if (!current_user) return res.end('Votre code d" access est erroné');
-
+       console.log('UTILISATEUR VERIFIER')
         // PRENDRE LA FEUILLE
-        models.sheet_model.findOne({ dte_registre: '2021-11-29T00:00:01.000Z' }, (err, current_sheet) => {
+        models.sheet_model.findOne({ dte_registre: '2021-11-29T11:45:18.856Z' }, (err, current_sheet) => {
             //console.log(current_sheet, new Date(Date.now()));
             console.log(current_sheet)
             //res.redirect("/administration")
-
-            res.end('sheet')
+            console.log('FEUILLE VERIFIER')
+            //res.end('sheet')
+            //verif user dans bd
+            models.registre_model.findOne({ _id: current_user.id }, (err, current_registre) => {
+                if(err) return res.end('Une erreur est apparue lors de la verification utilisateur');
+                console
+                if(!current_registre) {
+                  // arriver 
+                  console.log('UTILISATEUR ARRIVER')
+                   res.redirect("/arrivee")
+                }else{
+                  console.log('UTILISATEUR DEPART')
+                   res.redirect("/depart")
+                }
+            })
         })
 
     })
 
 });
+
 
 /*
 [
@@ -58,11 +73,11 @@ Router.post("/emarger", (req, res) => {
 ]
 
 */
-Router.get("/h_arrive/:times", (req, res) => {
-    res.render("arriver", { geoLoc: false })
+Router.get("/arrivee", (req, res) => {
+    res.render("arrivee", { geoLoc: false })
 });
 
-Router.get("/h_depart/:times", (req, res) => {
+Router.get("/depart", (req, res) => {
     res.render("depart", { geoLoc: false })
 });
 

@@ -1,6 +1,7 @@
 var express = require("express");
 var createError = require('http-errors');
 
+
 var path = require('path');
 //var cookieParser = require('cookie-parser');
 //var logger = require('../weblibrary/node_modules/morgan');
@@ -16,13 +17,16 @@ var session = require("express-session");
 //var flash = require('connect-flash');
 var mongoDB = 'mongodb://127.0.0.1/presence_db';
 //var dotenv  = require('dotenv')
+ 
 
+//let dateFormat = require("dateformat");
 let models = require("./models/les_models");
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on('open', () => { console.log("Connected successfully to database ") });
 db.on('error', (e) => { console.log(e) });
+
 
 var app = express();
 // process.env.NODE_ENV ="production";
@@ -83,4 +87,4 @@ nmap.discover(function (err, report) {
 });*/
 
 //console.log(new Date(Date.now()).toLocaleDateString("en-US"))
-app.listen(3000, function () { console.log('serverx is listening to port 3000...ok') });
+app.listen(4000, function () { console.log('serverx is listening to port 4000...ok') });

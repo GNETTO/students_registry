@@ -373,13 +373,20 @@ Router.get("/registre/ajouter", (req, res) => {
 });
 
 Router.post("/registre/ajouter", (req, res) => {
+    let format = new Date(req.body.dte_registre) ; console.log(format)
+    
     let registre = req.body; //console.log(appre)
-    new_test = new models.sheet_model(registre);
-
+    //new_test = new models.sheet_model(registre);
+    new_test = new models.sheet_model({dte_registre:new Date()});
+    //console.log(new_test)
+    
     new_test.save((err, doc) => {
-        res.render('form_registre', { action: 'CREER', tb_registre: doc })
-    });
+        //res.render('form_registre', { action: 'CREER', tb_registre: doc }); VRAI
+        res.render('form_registre', { action: 'CREER',tb_registre: fake_sheet})
+        console.log('OKKKK ')
+    })
 
+    //res.render('form_registre', { action: 'CREER',tb_registre: fake_sheet})
 
 });
 
