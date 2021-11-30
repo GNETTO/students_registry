@@ -15,7 +15,7 @@ block content
        th Date du Registre
        th Action
      for reg in registre
-      tr
+      tr(class="row-sheet" data-idsheet="#{reg.id}")
        td=reg.id
        td=reg.dte_registre
        td
@@ -25,3 +25,12 @@ block content
          img(src="/icons/trash.svg" class="small-icons") 
 
    div(class="bg-light p-3 m-auto") LISTES DES EMARGEMENTS PAR REGISTRE
+
+   table(class="table" id="emarg-table")
+    thead
+     tr
+      th apprenant
+      th arrivée 
+      th depart
+    tbody(id="tab-list-emargement")
+  script(src="/js/sheet.js")

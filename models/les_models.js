@@ -95,7 +95,8 @@ const student_schema = new Schema(
 const sheet_schema = new Schema(
     {
 
-        dte_registre: { type: Date, unique: true }
+        dte_registre: { type: String, unique: true },
+        dte_string : {type:Date}
     }
 );
 
@@ -104,8 +105,10 @@ const registre_schema = new Schema(
     {
 
         ha: { type: String },
+        hadate:{type:Date},
         hd: { type: String },
-        code_access: { type: String },
+        hddtate:{type:Date},
+        
         student: { type: Schema.Types.ObjectId, ref: 'students' },
         sheet: { type: Schema.Types.ObjectId, ref: 'sheets' }
 
@@ -134,4 +137,4 @@ models.setting_model = mongoose.model('setting', setting_schema);
 module.exports = models;
 
 
-/*db.students.insertOne( { nom: 'Gneto', prenoms: 'dominique', code_access:'a' } );*/
+/*db.students.insertOne( { nom: 'doue', prenoms: 'elodie', code_access:'az' } );*/

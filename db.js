@@ -1,6 +1,8 @@
 db.settings.insertOne({ sheet_auto_generation: true, xxx: false, display_registre: true });
+db.settings.insertOne({ display: true, xxx: false, display_registre: true });
+db.settings.insertOne({ sheet_auto_generation: true, xxx: false, display_registre: true });
 
-
+db.sheets.remove({})
 //File upload 
 
 let file = document.getElementById("file_chien");

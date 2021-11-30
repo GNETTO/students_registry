@@ -2,4 +2,7 @@ extends layout
 block content 
  include partial_home.jade
  h3 Arriver - MTN ACADEMY
- 
+ p Heure d' arrivee :
+ form(action="" method="post")
+    input(type="text" name="student" value="#{student}")
+    button(class="btn btn-warning") valider

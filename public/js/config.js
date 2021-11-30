@@ -22,7 +22,7 @@ let Mydoc = function (tag, properties, methods, checked, action, ...childrens) {
     }
     action(doc, checked);
     return doc;
-}//
+}
 let tab = document.getElementById('config-table-body');
 
 
