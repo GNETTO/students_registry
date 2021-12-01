@@ -34,11 +34,11 @@ Array.prototype.map.call(row_sheet, tr=>{
         s.sheet =event.currentTarget.getAttribute('data-idsheet');
 
         axios.post("/administration/registre/presence", s,).then(response => {
-
+          console.log(response)  
         tab.innerHTML="";
             let list = Array.from(response.data); 
         
-            //console.log(list)
+            console.log(response.data)
             for(let val of  list){
                 console.log(typeof val)
                 tab.appendChild(

@@ -417,11 +417,14 @@ Router.post("/registre/modifier/:id", (req, res) => {
 
 //axios request return list 
 Router.post("/registre/presence",(req, res)=>{
-    models.registre_model.find(req.body, (err,list_presence) => {
+   /* models.registre_model.find(req.body, (err,list_presence) => {
+        console.log(list_presence)
+        res.end(JSON.stringify( list_presence) )
+    })*/
+    models.registre_model.findOne(req.body).populate('students').exec( (err,list_presence) => {
         console.log(list_presence)
         res.end(JSON.stringify( list_presence) )
     })
-    
 })
 
 
