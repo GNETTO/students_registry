@@ -2,8 +2,15 @@ db.settings.insertOne({ sheet_auto_generation: true, xxx: false, display_registr
 db.settings.insertOne({ display: true, xxx: false, display_registre: true });
 db.settings.insertOne({ sheet_auto_generation: true, xxx: false, display_registre: true });
 
-db.sheets.remove({})
-//File upload 
+db.sheets.remove()
+
+
+db.students.updateMany({ _id: { $ne: 10 } }, { $set: { identifiant: 'comptec' } })
+
+
+db.students.insertOne({ nom: "Azo", prenoms: "Tiero", email: "azo@gmail.com", habitation: "marcory hlm", phone: "020502366", code_access: 'azo', identifiant: '' })
+
+//File upload {}
 
 let file = document.getElementById("file_chien");
 let img_modification = document.getElementById("img_modification");

@@ -12,12 +12,14 @@ block content
        th ID 
        th Nom
        th Prenoms
+       th Formations
        th Action
      for appr in apprenant
       tr
-       td 10
+       td 
        td=appr.nom
        td=appr.prenoms
+       td formation
        td
         a(href="/administration/apprenant/modifier/#{appr.id}")
          img(src="/icons/pen-alt.svg" class="small-icons")

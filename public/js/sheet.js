@@ -27,36 +27,36 @@ let tab = document.getElementById('tab-list-emargement');
 
 let row_sheet = document.querySelectorAll('.row-sheet');
 
-Array.prototype.map.call(row_sheet, tr=>{
-    tr.addEventListener('click', event=>{
+Array.prototype.map.call(row_sheet, tr => {
+    tr.addEventListener('click', event => {
         //console.log(event.currentTarget)
-        s ={};
-        s.sheet =event.currentTarget.getAttribute('data-idsheet');
+        s = {};
+        s.sheet = event.currentTarget.getAttribute('data-idsheet');
 
         axios.post("/administration/registre/presence", s,).then(response => {
-          console.log(response)  
-        tab.innerHTML="";
-            let list = Array.from(response.data); 
-        
+            console.log(response)
+            tab.innerHTML = "";
+            let list = Array.from(response.data);
+
             console.log(response.data)
-            for(let val of  list){
+            for (let val of list) {
                 console.log(typeof val)
                 tab.appendChild(
-                    Mydoc("tr",{},{},false,(c,e)=>{},
-                        Mydoc("td",{},{},false,(c,e)=>{},val.student),
-                        Mydoc("td",{},{},false,(c,e)=>{},val.ha),
-                        Mydoc("td",{},{},false,(c,e)=>{},val.hd)
+                    Mydoc("tr", {}, {}, false, (c, e) => { },
+                        Mydoc("td", {}, {}, false, (c, e) => { }, val.student.nom + " " + val.student.prenoms),
+                        Mydoc("td", {}, {}, false, (c, e) => { }, val.ha),
+                        Mydoc("td", {}, {}, false, (c, e) => { }, val.hd)
 
                     )
                 )
             }
         }).catch(error => {
-    
+
         }).then(d => {
             console.log('config validation succeeded axios')
-    
+
         })
-    },true)
+    }, true)
 })
 
 //click the first sheet

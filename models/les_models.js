@@ -37,10 +37,10 @@ const offre_formation_schema = new Schema(
         echeance: { type: Number },
         partenaires: [
             {
-                nom: { type: Schema.Types.ObjectId, ref: 'partenaires' }
+                nom: { type: Schema.Types.ObjectId, ref: 'partenaire' }
             }
         ],
-        formation: { type: Schema.Types.ObjectId, ref: 'formations' }
+        formation: { type: Schema.Types.ObjectId, ref: 'formation' }
     }
 );
 
@@ -62,9 +62,9 @@ const inscription_schema = new Schema(
 
         intutile: { type: String },
         identifiant: { type: String },
-        student: { type: Schema.Types.ObjectId, ref: 'students' },
+        student: { type: Schema.Types.ObjectId, ref: 'student' },
         inscris_le: { type: Date },
-        offre: { type: Schema.Types.ObjectId, ref: 'offre_formations' }
+        offre: { type: Schema.Types.ObjectId, ref: 'offre_formation' }
 
     }
 );
@@ -75,11 +75,13 @@ const student_schema = new Schema(
 
         nom: { type: String },
         prenoms: { type: String },
+        identifiant: { type: String },
         code_access: { type: String },
         email: { type: String },
         habitation: { type: String },
         phone: { type: String },
-        file: { type: String }
+        file: { type: String },
+        formation: { type: Schema.Types.ObjectId, ref: 'formation' }
 
     }
 );
@@ -96,7 +98,7 @@ const sheet_schema = new Schema(
     {
 
         dte_registre: { type: String, unique: true },
-        dte_string : {type:Date}
+        dte_string: { type: Date }
     }
 );
 
@@ -105,15 +107,16 @@ const registre_schema = new Schema(
     {
 
         ha: { type: String },
-        hadate:{type:Date},
+        hadate: { type: Date },
         hd: { type: String },
-        hddtate:{type:Date},
-        
-        student: { type: Schema.Types.ObjectId, ref: 'students' },
-        sheet: { type: Schema.Types.ObjectId, ref: 'sheets' }
+        hddtate: { type: Date },
+
+        student: { type: Schema.Types.ObjectId, ref: 'student' },
+        sheet: { type: Schema.Types.ObjectId, ref: 'sheet' }
 
     }
 );
+
 
 const setting_schema = new Schema(
     {

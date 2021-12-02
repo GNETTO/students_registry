@@ -1,8 +1,26 @@
 extends layout 
 block content 
  include partial_home.jade
- h3 Arriver - MTN ACADEMY
- p Heure d' arrivee :
- form(action="" method="post")
-    input(type="text" name="student" value="#{student}")
-    button(class="btn btn-warning") valider
+
+ main(class= "col-md-9 ms-sm-auto col-lg-10 px-md-4")
+   div(class="testbox")
+    
+    form(class="myform" method="post")
+      div(class="banne d-flex")
+        img(src="/photo/sun.gif" style="height:150px; width:50%" class="m-auto")
+      br
+      legend(class="text-center")  VEUILLER EMARGER VOTRE HEURE D' ARRIVEE 
+       
+      div(class="item")
+       p(class="text-success display-7 text-center") Heure Actuelle 
+        span(id="h-arrive" class="display- text-whit p-2 rounded fw-bold fs-25")
+      
+      div(class="btn-block")
+       button(type="submit" ) ARRIVER
+      div(class="d-flex align-items-baseline bg-light")
+       img(src="/icons/user-tie.svg" class="" style="width:25px")
+       p Utilisateur en cours : 
+       
+       p(class="p-5 text-danger") #{student.nom} #{student.prenoms}
+  
+ script(src="/js/arrive.js")

@@ -348,10 +348,11 @@ Router.get("/registre", (req, res) => {
             },
             (err, resultat) => {
                 //console.log(resultat.students.length)
+
                 res.render('registre',
                     { registre: all_tb_registre, total_student: resultat.students.length, total_formation: resultat.formations.length, total_sheet: resultat.sheets.length, total_partenaire: resultat.partenaires.length })
             })
-        //res.render('registre', { registre: all_tb_registre })
+
     })
 
 });
@@ -373,11 +374,11 @@ Router.get("/registre/ajouter", (req, res) => {
 });
 
 Router.post("/registre/ajouter", (req, res) => {
-    req.body.dte_string= new Date(req.body.dte_registre)
+    req.body.dte_string = new Date(req.body.dte_registre)
     new_test = new models.sheet_model(req.body);
-    
+
     new_test.save((err, doc) => {
-        res.render('form_registre', { action: 'CREER', tb_registre: doc }); 
+        res.render('form_registre', { action: 'CREER', tb_registre: doc });
         //res.render('form_registre', { action: 'CREER',tb_registre: fake_sheet})
         console.log('OKKKK ')
     })
@@ -416,16 +417,17 @@ Router.post("/registre/modifier/:id", (req, res) => {
 });
 
 //axios request return list 
-Router.post("/registre/presence",(req, res)=>{
-   /* models.registre_model.find(req.body, (err,list_presence) => {
+Router.post("/registre/presence", (req, res) => {
+    /*models.registre_model.find(req.body, (err, list_presence) => {
         console.log(list_presence)
-        res.end(JSON.stringify( list_presence) )
+        res.end(JSON.stringify(list_presence))
     })*/
-    models.registre_model.findOne(req.body).populate('students').exec( (err,list_presence) => {
+    models.registre_model.find(req.body).populate('student').exec((err, list_presence) => {
         console.log(list_presence)
-        res.end(JSON.stringify( list_presence) )
+        res.end(JSON.stringify(list_presence))
     })
 })
+
 
 
 Router.get("/registre/supprimer/:id", (req, res) => {
